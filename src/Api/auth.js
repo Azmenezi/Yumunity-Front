@@ -2,24 +2,16 @@ import instance from ".";
 import jwt_decode from "jwt-decode";
 
 const signup = async (userInfo) => {
-  try {
-    const formData = new FormData();
-    for (const key in userInfo) formData.append(key, userInfo[key]);
-    const { data } = await instance.post("/users/signup", formData);
-    storeToken(data.access);
+  // try {
+  const formData = new FormData();
+  for (const key in userInfo) formData.append(key, userInfo[key]);
+  const { data } = await instance.post("/users/signup", formData);
+  storeToken(data.access);
 
-    return data;
-  } catch (error) {
-    console.log(error.response.data.error.message);
-    if (error.response.data.details?.password.includes("/[a-zA-Z0-9]{8,}/")) {
-      alert(
-        "Password must at least 8 digits with a combination of numbers and letters"
-      );
-    }
-    if (error.response.data.message?.includes("E11000 duplicate key error")) {
-      alert("Username already exists, please use another username");
-    }
-  }
+  return data;
+  // } catch (error) {
+  //   console.log(error.response.data.error.message);
+  // }
 };
 
 const signin = async (userInfo) => {

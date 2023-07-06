@@ -2,10 +2,11 @@ import React, { useContext, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { signup } from "../Api/auth";
 import { useNavigate } from "react-router-dom";
+import ErrorMsg from "../Components/ErrorMsg";
 
 const Signup = () => {
   const [userInfo, setUserInfo] = useState({});
-  const [password, setPassword] = useState();
+  const [confirmPassword, setConfirmPassword] = useState("");
   const navigate = useNavigate();
 
   const pass = "";
@@ -19,7 +20,11 @@ const Signup = () => {
       setUserInfo({ ...userInfo, [e.target.name]: e.target.value });
     }
   };
-  const { mutate: registerFn } = useMutation({
+  const {
+    mutate: registerFn,
+    error,
+    response,
+  } = useMutation({
     mutationFn: () => signup(userInfo),
     onSuccess: () => {
       navigate("/");
@@ -27,21 +32,28 @@ const Signup = () => {
       //     navigate("/");
       //   }
     },
+    onError: (err) => {
+      console.log("herre", error?.message);
+      //alert(err);
+    },
   });
   const handleFormSubmit = (e) => {
     e.preventDefault();
     // Add register logic here
     // console.log("test")
-
     registerFn();
   };
+
   const handlepassword = (e) => {
     e.preventDefault();
-    setPassword(e.target.value);
+    setConfirmPassword(e.target.value);
     console.log(userInfo.password);
-    console.log(password);
-    if (password == userInfo.password) console.log("truee");
+
+    // if (password == userInfo.password) console.log("truee");
   };
+  const match = userInfo.password == confirmPassword;
+
+  console.log(match);
 
   return (
     <div className="bg-gray-900 min-h-screen flex items-center justify-center absolute inset-0 z-[-1]">
@@ -74,7 +86,7 @@ const Signup = () => {
               Email
             </label>
             <input
-              type="email"
+              type="text"
               id="email"
               name="email"
               onChange={handleChange}
@@ -131,6 +143,14 @@ const Signup = () => {
               required
             />
           </div> */}
+          {/* {error?.response.data.error?.message ||
+            error?.response.data?.errors[1].password}
+          {console.log(
+            "herre",
+            error?.response.data.error || error?.response.data.errors[0]
+          )} */}
+
+          <ErrorMsg error={error} />
           <div className="flex justify-center">
             <button
               type="submit"
