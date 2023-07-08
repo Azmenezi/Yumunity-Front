@@ -3,54 +3,44 @@ import { useMutation } from "@tanstack/react-query";
 import { signup } from "../../Api/auth";
 import { useNavigate } from "react-router-dom";
 import ErrorMsg from "../ErrorMsg";
-
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
 const SignUp = () => {
-  const [userInfo, setUserInfo] = useState({});
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [ourError, setOurError] = useState({ message: undefined });
-
+  const initialValues = { username: "", email: "", password: "" };
+  const validationSchema = Yup.object().shape({
+    username: Yup.string().required(),
+    email: Yup.string().email().required(),
+    password: Yup.string()
+      .required("Password is required")
+      .matches(/.{8,}$/, "Password must be at least 8 characters long.")
+      ?.matches(/\d/, "Password must contain a number.")
+      ?.matches(/[A-Z]/, "Password must contain an uppercase letter.")
+      ?.matches(/[a-z]/, "Password must contain a lowercase letter.")
+      ?.matches(/[!@#$%^&*(),.?":{}|<>]/, "Password must contain a symbol."),
+    passwordConfirmation: Yup.string()
+      .required("Confirmation password is required")
+      .oneOf([Yup.ref("password"), null], "Passwords must match"),
+  });
   const navigate = useNavigate();
 
-  const handleChange = (e) => {
-    if (e.target.name === "image") {
-      return setUserInfo({ ...userInfo, [e.target.name]: e.target.files[0] });
-    }
-
-    setUserInfo({ ...userInfo, [e.target.name]: e.target.value });
-  };
-  const {
-    mutate: registerFn,
-    error,
-    response,
-  } = useMutation({
-    mutationFn: () => signup(userInfo),
+  const { mutate: registerFn, error } = useMutation({
+    mutationFn: (values) => signup(values),
     onSuccess: () => {
-      navigate("/");
-      //   if (localStorage.getItem("token")) {
-      //     navigate("/");
-      //   }
+      // navigate("/");
+      if (localStorage.getItem("token")) {
+        console.log(localStorage.getItem("token"));
+        navigate("/");
+      }
     },
-    onError: (err) => {
-      console.log("herre", error?.message);
-      //alert(err);
+    onError: (e) => {
+      console.log(e);
     },
   });
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
+  const handleFormSubmit = (values, helpers) => {
+    // console.log(values);
+    // console.log(helpers);
 
-    if (confirmPassword !== userInfo.password)
-      return setOurError({ message: "Passwords did not match" });
-
-    setOurError({ message: undefined });
-    registerFn();
-  };
-
-  const handlepassword = (e) => {
-    e.preventDefault();
-    setConfirmPassword(e.target.value);
-    console.log(userInfo.password);
-
-    // if (password == userInfo.password) console.log("truee");
+    registerFn(values);
   };
 
   return (
@@ -58,83 +48,100 @@ const SignUp = () => {
       <h2 className="text-3xl text-white font-semibold mb-6">
         Sign up as a new user
       </h2>
-      <form onSubmit={handleFormSubmit}>
-        <div className="mb-4">
-          <label
-            htmlFor="name"
-            className="block text-white text-sm font-medium mb-2"
-          >
-            Username
-          </label>
-          <input
-            type="text"
-            id="username"
-            name="username"
-            onChange={handleChange}
-            className="w-full px-4 py-2 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label
-            htmlFor="email"
-            className="block text-white text-sm font-medium mb-2"
-          >
-            Email
-          </label>
-          <input
-            type="text"
-            id="email"
-            name="email"
-            onChange={handleChange}
-            className="w-full px-4 py-2 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            required
-          />
-        </div>
-        <div className="mb-4"></div>
-        <div className="mb-4">
-          <label
-            htmlFor="password"
-            className="block text-white text-sm font-medium mb-2"
-          >
-            Password
-          </label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            onChange={handleChange}
-            className="w-full px-4 py-2 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label
-            htmlFor="confirm_password"
-            className="block text-white text-sm font-medium mb-2"
-          >
-            Confirm Password
-          </label>
-          <input
-            type="password"
-            id="confirm_password"
-            name="confirm_password"
-            onChange={handlepassword}
-            className="w-full px-4 py-2 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            required
-          />
-        </div>
+      <Formik
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={handleFormSubmit}
+      >
+        <Form>
+          <div className="mb-4">
+            <label
+              htmlFor="name"
+              className="block text-white text-sm font-medium mb-2"
+            >
+              Username
+            </label>
+            <Field
+              name="username"
+              type="text"
+              className="w-full px-4 py-2 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <ErrorMessage
+              name="username"
+              component="div"
+              className="text-red-500 text-sm font-medium mb-2"
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              htmlFor="email"
+              className="block text-white text-sm font-medium mb-2"
+            >
+              Email
+            </label>
+            <Field
+              name="email"
+              type="email"
+              // onChange={handleChange}
+              className="w-full px-4 py-2 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <ErrorMessage
+              name="email"
+              component="div"
+              className="text-red-500 text-sm font-medium mb-2"
+            />
+          </div>
+          <div className="mb-4"></div>
+          <div className="mb-4">
+            <label
+              htmlFor="password"
+              className="block text-white text-sm font-medium mb-2"
+            >
+              Password
+            </label>
+            <Field
+              name="password"
+              type="password"
+              // onChange={handleChange}
+              className="w-full px-4 py-2 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <ErrorMessage
+              name="password"
+              component="div"
+              className="text-red-500 text-sm font-medium mb-2"
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              htmlFor="passwordConfirmation"
+              className="block text-white text-sm font-medium mb-2"
+            >
+              Confirm Password
+            </label>
+            <Field
+              name="passwordConfirmation"
+              type="password"
+              // onChange={handlePassword}
+              className="w-full px-4 py-2 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <ErrorMessage
+              name="passwordConfirmation"
+              component="div"
+              className="text-red-500 text-sm font-medium mb-2"
+            />
+          </div>
 
-        <ErrorMsg error={error} ourError={ourError?.message} />
-        <div className="flex justify-center">
-          <button
-            type="submit"
-            className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
-          >
-            Register
-          </button>
-        </div>
-      </form>
+          <ErrorMsg error={error} />
+          <div className="flex justify-center">
+            <button
+              type="submit"
+              className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
+            >
+              Register
+            </button>
+          </div>
+        </Form>
+      </Formik>
     </div>
   );
 };
