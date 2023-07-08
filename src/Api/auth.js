@@ -6,7 +6,8 @@ const signup = async (userInfo) => {
   const formData = new FormData();
   for (const key in userInfo) formData.append(key, userInfo[key]);
   const { data } = await instance.post("/users/signup", formData);
-  storeToken(data.access);
+  // console.log(data);
+  storeToken(data.token);
 
   return data;
   // } catch (error) {
