@@ -37,4 +37,7 @@ const checkToken = () => {
   }
   return false;
 };
-export { signin, signup, storeToken, checkToken };
+const signout = () => {
+  localStorage.removeItem("token");
+};
+export { signin, signup, storeToken, checkToken, signout };

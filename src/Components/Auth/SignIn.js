@@ -36,7 +36,7 @@ const SignIn = () => {
   };
 
   return (
-    <div className="max-w-md w-full px-6 py-8 bg-gray-800 rounded-md shadow-md">
+    <div className="max-w-md w-full px-6 py-8 bg-[#A3BB98] rounded-md shadow-md">
       <h2 className="text-3xl text-white font-semibold mb-6">Sign in</h2>
       <Formik
         initialValues={initialValues}
@@ -95,15 +95,10 @@ const SignIn = () => {
             <div className="flex justify-center">
               <button
                 type="submit"
-                className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
+                className="px-4 py-2 bg-white rounded-md hover:bg-[#FFD98F] transition-colors"
               >
                 Login
               </button>
-              <div className="flex justify-center">
-                <button className="px-4 py-2 bg-blue-300 text-white rounded-md hover:bg-blue-600 transition-colors mx-3">
-                  <img style={{ width: "30px" }} src={Google} alt="google" />
-                </button>
-              </div>
             </div>
           </Form>
         )}
