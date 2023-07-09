@@ -1,19 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
+import { checkToken } from "../../Api/auth";
+import { useContext } from "react";
+import UserContext from "../../context/UserContext";
 
 const SignOut = () => {
-  //will be transfared to the auth api file
+  const [user, setUser] = useContext(UserContext);
   const logout = () => {
     localStorage.removeItem("token");
-    console.log("out");
+    setUser(checkToken());
   };
-  //////////////////////////////////////////
   return (
     <>
       <button
         onClick={logout}
         className="bg-[#F0ECCF] text-black px-4 py-2 rounded"
       >
-        Logout
+        Sign out
       </button>
     </>
   );
