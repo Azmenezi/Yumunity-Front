@@ -56,18 +56,18 @@ function Navbar() {
           } translate-y-[2rem]`}
         />
       </div>
-
       <nav
         ref={navbarRef}
-        className={`absolute top-0 left-0 h-full w-0 z-10 opacity-0 transition-all duration-600 delay-100 ease-in-out transform ${
-          isOpen && "w-1/4 opacity-100"
+        className={`fixed top-0 left-0 h-full w-[25%] bg-[#A3BB98] z-40 flex flex-col justify-center items-center transition-all duration-500 ease-in-out transform ${
+          isOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        <ul className="absolute top-1/3 left-1/4">
+
+        <ul className="flex flex-col gap-4">
           <NavLink
             to="/"
             onClick={() => setIsOpen(!isOpen)}
-            className="list-none text-2xl text-white leading-10 uppercase tracking-wide"
+            className="text-2xl text-white uppercase tracking-wide"
           >
             Home
           </NavLink>
@@ -75,36 +75,42 @@ function Navbar() {
           <NavLink
             to="/recipes"
             onClick={() => setIsOpen(!isOpen)}
-            className="list-none text-2xl text-white leading-10 uppercase tracking-wide"
+            className="text-2xl text-white uppercase tracking-wide"
           >
-            <li>Recipes</li>
+            Recipes
           </NavLink>
           <NavLink
             to="/recipes"
             onClick={() => setIsOpen(!isOpen)}
-            className="list-none text-2xl text-white leading-10 uppercase tracking-wide"
+            className="text-2xl text-white uppercase tracking-wide"
           >
-            <li>Categories</li>
+            Categories
           </NavLink>
           <NavLink
             to="/recipes"
             onClick={() => setIsOpen(!isOpen)}
-            className="list-none text-2xl text-white leading-10 uppercase tracking-wide"
+            className="text-2xl text-white uppercase tracking-wide"
           >
-            <li>Ingredients</li>
+            Ingredients
           </NavLink>
         </ul>
         <div className="absolute top-[80vh] left-[6vw] flex gap-5">
           {!user ? (
             <>
               <button
-                onClick={() => navigate("/signin")}
+                onClick={() => {
+                  navigate("/signin");
+                  setIsOpen(!isOpen);
+                }}
                 className="bg-[#F0ECCF] text-black px-4 py-2 rounded"
               >
                 Sign In
               </button>
               <button
-                onClick={() => navigate("/signup")}
+                onClick={() => {
+                  navigate("/signup");
+                  setIsOpen(!isOpen);
+                }}
                 className="bg-[#F0ECCF] text-black px-4 py-2 rounded"
               >
                 Sign Up
@@ -115,18 +121,13 @@ function Navbar() {
           )}
         </div>
       </nav>
-      <div
-        className={`absolute  top-0 transition-all duration-1000 delay-50 ease-in-out ${
-          isOpen && "h-[100vh] w-full bg-black opacity-50"
-        } `}
-      ></div>
 
-      <div
-        className={`absolute top-0 left-0 h-full w-0 z-5 opacity-0 transition-all duration-500 delay-50 ease-in-out ${
-          isOpen && "w-1/4 opacity-100"
-        } bg-[#A3BB98]`}
-        id="blue"
-      />
+      {isOpen && (
+        <div
+          className="fixed top-0 left-0 w-full h-full bg-black opacity-50 z-30"
+          onClick={() => setIsOpen(false)}
+        ></div>
+      )}
     </>
   );
 }

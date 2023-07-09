@@ -6,7 +6,7 @@ import UserContext from "./context/UserContext";
 import { useEffect, useState } from "react";
 import { checkToken } from "./Api/auth";
 import Navbar from "./Components/Navbar/Navbar";
-
+import theIMage from "./media/homeImg.jpg";
 function App() {
   const [user, setUser] = useState(false);
   useEffect(() => {
@@ -15,7 +15,8 @@ function App() {
   return (
     <UserContext.Provider value={[user, setUser]}>
       <div>
-        <Navbar/>
+        <Navbar />
+
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/signup" element={<Signup />} />
