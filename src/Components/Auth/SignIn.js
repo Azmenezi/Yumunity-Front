@@ -7,7 +7,6 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useContext } from "react";
 import UserContext from "../../context/UserContext";
 import * as Yup from "yup";
-import Google from "../../svg/google.svg";
 const SignIn = () => {
   const [user, setUser] = useContext(UserContext);
   const initialValues = {
