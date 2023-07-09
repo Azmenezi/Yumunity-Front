@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import UserContext from "../../context/UserContext";
 import SignOut from "../Auth/SignOut";
@@ -64,18 +64,35 @@ function Navbar() {
         }`}
       >
         <ul className="absolute top-1/3 left-1/4">
-          <li className="list-none text-2xl text-white leading-10 uppercase tracking-wide">
+          <NavLink
+            to="/"
+            onClick={() => setIsOpen(!isOpen)}
+            className="list-none text-2xl text-white leading-10 uppercase tracking-wide"
+          >
             Home
-          </li>
-          <li className="list-none text-2xl text-white leading-10 uppercase tracking-wide">
-            Recipes
-          </li>
-          <li className="list-none text-2xl text-white leading-10 uppercase tracking-wide">
-            Contact
-          </li>
-          <li className="list-none text-2xl text-white leading-10 uppercase tracking-wide">
-            Help
-          </li>
+          </NavLink>
+
+          <NavLink
+            to="/recipes"
+            onClick={() => setIsOpen(!isOpen)}
+            className="list-none text-2xl text-white leading-10 uppercase tracking-wide"
+          >
+            <li>Recipes</li>
+          </NavLink>
+          <NavLink
+            to="/recipes"
+            onClick={() => setIsOpen(!isOpen)}
+            className="list-none text-2xl text-white leading-10 uppercase tracking-wide"
+          >
+            <li>Categories</li>
+          </NavLink>
+          <NavLink
+            to="/recipes"
+            onClick={() => setIsOpen(!isOpen)}
+            className="list-none text-2xl text-white leading-10 uppercase tracking-wide"
+          >
+            <li>Ingredients</li>
+          </NavLink>
         </ul>
         <div className="absolute top-[80vh] left-[6vw] flex gap-5">
           {!user ? (
@@ -98,7 +115,12 @@ function Navbar() {
           )}
         </div>
       </nav>
-      <div className={`transition-all duration-1000 delay-50 ease-in-out ${isOpen && "h-[100vh] w-full bg-black opacity-50"} `}></div>
+      <div
+        className={`absolute  top-0 transition-all duration-1000 delay-50 ease-in-out ${
+          isOpen && "h-[100vh] w-full bg-black opacity-50"
+        } `}
+      ></div>
+
       <div
         className={`absolute top-0 left-0 h-full w-0 z-5 opacity-0 transition-all duration-500 delay-50 ease-in-out ${
           isOpen && "w-1/4 opacity-100"

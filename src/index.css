@@ -7,3 +7,10 @@
     border-color: #f56565;
   }
 }
+
+body {
+  margin-top: 7%;
+}
+.active {
+  color: #ffd98f;
+}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { checkToken } from "../../Api/auth";
 import { useContext } from "react";
 import UserContext from "../../context/UserContext";
