@@ -9,8 +9,14 @@ const ErrorMsg = ({ error }) => {
 
   if (errorMessage && errorMessage.includes("username")) {
     errorMessage = "Username already in use";
-  } else if (errorMessage && errorMessage.includes("email")) {
+  } else if (errorMessage && errorMessage.includes("dup key: { email:")) {
     errorMessage = "Email already in use";
+  } else if (
+    errorMessage &&
+    (errorMessage.includes("Invalid password") ||
+      errorMessage.includes("Invalid email"))
+  ) {
+    errorMessage = "Invalid email or password";
   }
 
   return (

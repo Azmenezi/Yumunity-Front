@@ -1,38 +1,27 @@
 import React from "react";
 import { useMutation } from "@tanstack/react-query";
-import { signup } from "../../Api/auth";
+import { signin } from "../../Api/auth";
 import { useNavigate } from "react-router-dom";
 import ErrorMsg from "../ErrorMsg";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useContext } from "react";
 import UserContext from "../../context/UserContext";
 import * as Yup from "yup";
-const SignUp = () => {
+import Google from "../../svg/google.svg";
+const SignIn = () => {
   const [user, setUser] = useContext(UserContext);
   const initialValues = {
-    username: "",
     email: "",
     password: "",
-    passwordConfirmation: "",
   };
   const validationSchema = Yup.object().shape({
-    username: Yup.string().required(),
     email: Yup.string().email().required(),
-    password: Yup.string()
-      .required("Password is required")
-      .matches(/.{8,}$/, "Password must be at least 8 characters long.")
-      ?.matches(/\d/, "Password must contain a number.")
-      ?.matches(/[A-Z]/, "Password must contain an uppercase letter.")
-      ?.matches(/[a-z]/, "Password must contain a lowercase letter.")
-      ?.matches(/[!@#$%^&*(),.?":{}|<>]/, "Password must contain a symbol."),
-    passwordConfirmation: Yup.string()
-      .required("Confirmation password is required")
-      .oneOf([Yup.ref("password"), null], "Passwords must match"),
+    password: Yup.string().required("Password is required"),
   });
   const navigate = useNavigate();
 
-  const { mutate: registerFn, error } = useMutation({
-    mutationFn: (values) => signup(values),
+  const { mutate: loginFn, error } = useMutation({
+    mutationFn: (values) => signin(values),
     onSuccess: () => {
       setUser(true);
       navigate("/");
@@ -43,12 +32,12 @@ const SignUp = () => {
   });
   if (user) return navigate("/");
   const handleFormSubmit = (values, helpers) => {
-    registerFn(values);
+    loginFn(values);
   };
 
   return (
     <div className="max-w-md w-full px-6 py-8 bg-gray-800 rounded-md shadow-md">
-      <h2 className="text-3xl text-white font-semibold mb-6">Register</h2>
+      <h2 className="text-3xl text-white font-semibold mb-6">Sign in</h2>
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
@@ -56,28 +45,6 @@ const SignUp = () => {
       >
         {({ errors, touched }) => (
           <Form>
-            <div className="mb-4">
-              <label
-                htmlFor="name"
-                className="block text-white text-sm font-medium mb-2"
-              >
-                Username
-              </label>
-              <Field
-                name="username"
-                type="text"
-                className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                  errors.username && touched.username
-                    ? "border-red-500"
-                    : "border-gray-700"
-                }`}
-              />
-              <ErrorMessage
-                name="username"
-                component="div"
-                className="text-red-500 text-sm font-medium mb-2"
-              />
-            </div>
             <div className="mb-4">
               <label
                 htmlFor="email"
@@ -123,28 +90,6 @@ const SignUp = () => {
                 className="text-red-500 text-sm font-medium mb-2"
               />
             </div>
-            <div className="mb-4">
-              <label
-                htmlFor="passwordConfirmation"
-                className="block text-white text-sm font-medium mb-2"
-              >
-                Confirm Password
-              </label>
-              <Field
-                name="passwordConfirmation"
-                type="password"
-                className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                  errors.passwordConfirmation && touched.passwordConfirmation
-                    ? "border-red-500"
-                    : "border-gray-700"
-                }`}
-              />
-              <ErrorMessage
-                name="passwordConfirmation"
-                component="div"
-                className="text-red-500 text-sm font-medium mb-2"
-              />
-            </div>
 
             <ErrorMsg error={error} />
             <div className="flex justify-center">
@@ -152,8 +97,13 @@ const SignUp = () => {
                 type="submit"
                 className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
               >
-                Register
+                Login
               </button>
+              <div className="flex justify-center">
+                <button className="px-4 py-2 bg-blue-300 text-white rounded-md hover:bg-blue-600 transition-colors mx-3">
+                  <img style={{ width: "30px" }} src={Google} alt="google" />
+                </button>
+              </div>
             </div>
           </Form>
         )}
@@ -162,4 +112,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default SignIn;
