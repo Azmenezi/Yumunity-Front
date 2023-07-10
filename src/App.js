@@ -6,7 +6,7 @@ import UserContext from "./context/UserContext";
 import { useEffect, useState } from "react";
 import { checkToken } from "./Api/auth";
 import Navbar from "./Components/Navbar/Navbar";
-import theIMage from "./media/homeImg.jpg";
+import Recipes from "./Pages/Recipes";
 function App() {
   const [user, setUser] = useState(false);
   useEffect(() => {
@@ -19,6 +19,7 @@ function App() {
 
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/recipes" element={<Recipes />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/signin" element={<Signin />} />
         </Routes>
