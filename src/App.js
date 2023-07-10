@@ -7,6 +7,8 @@ import { useEffect, useState } from "react";
 import { checkToken } from "./Api/auth";
 import Navbar from "./Components/Navbar/Navbar";
 import Recipes from "./Pages/Recipes";
+import Categories from "./Pages/Categories";
+import Ingredients from "./Pages/Ingredients";
 function App() {
   const [user, setUser] = useState(false);
   useEffect(() => {
@@ -20,6 +22,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/recipes" element={<Recipes />} />
+          <Route path="/categories" element={<Categories />} />
+          <Route path="/ingredients" element={<Ingredients />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/signin" element={<Signin />} />
         </Routes>
