@@ -62,7 +62,6 @@ function Navbar() {
           isOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-
         <ul className="flex flex-col gap-4">
           <NavLink
             to="/"
@@ -80,14 +79,14 @@ function Navbar() {
             Recipes
           </NavLink>
           <NavLink
-            to="/recipes"
+            to="/categories"
             onClick={() => setIsOpen(!isOpen)}
             className="text-2xl text-white uppercase tracking-wide"
           >
             Categories
           </NavLink>
           <NavLink
-            to="/recipes"
+            to="/ingredients"
             onClick={() => setIsOpen(!isOpen)}
             className="text-2xl text-white uppercase tracking-wide"
           >
