@@ -1,9 +1,11 @@
-import React from 'react'
-
+import React from "react";
+import MultiSelect from "../Components/MultiSelect/MultiSelect";
 const Categories = () => {
   return (
-    <div>Categories</div>
-  )
-}
+    <div>
+      <MultiSelect />
+    </div>
+  );
+};
 
-export default Categories
+export default Categories;
