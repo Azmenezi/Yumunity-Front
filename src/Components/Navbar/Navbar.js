@@ -35,8 +35,8 @@ function Navbar() {
       <div
         ref={iconRef}
         className={`h-14 w-14 absolute top-10 left-5 z-50 cursor-pointer rounded-full bg-[#FFB100] opacity-60 transform ${
-          isOpen && "scale-120"
-        } shadow-md transition-all ease-in-out duration-200`}
+          isOpen && "scale-120 "
+        } shadow-md transition-all ease-in-out duration-200 `}
         id="icon"
         onClick={() => setIsOpen(!isOpen)}
       >
