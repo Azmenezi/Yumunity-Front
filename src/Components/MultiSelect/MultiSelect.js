@@ -48,8 +48,8 @@ const MultiSelect = () => {
     console.log(inputValue);
     setIsLoading(true);
     console.log(inputValue);
-    inputValue = { name: inputValue };
-    createCategoryFn(inputValue);
+    //inputValue = { name: inputValue };
+    createCategoryFn({ name: inputValue });
     console.log(options);
   };
   //https://react-select.com/creatable
