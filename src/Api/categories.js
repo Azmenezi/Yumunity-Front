@@ -8,7 +8,6 @@ const createCategory = async (category) => {
 
 const getAllCategories = async () => {
   const { data } = await instance.get("/categories");
-  console.log(data);
   return data;
 };
 

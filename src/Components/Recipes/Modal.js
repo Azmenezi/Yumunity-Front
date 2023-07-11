@@ -2,8 +2,12 @@ import React, { useState } from "react";
 import Input from "./Input";
 import { createRecipe } from "../../Api/recipes";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import MultiSelect from "../MultiSelect/MultiSelect";
+import MultiSelectIngredients from "../MultiSelect/MultiSelectIngredients";
 
 const Modal = ({ show, setShowModal }) => {
+  const [valuesString, setValuesString] = useState([]);
+  const [valuesStringIng, setValuesStringIng] = useState([]);
   const [recipeInfo, setRecipeInfo] = useState({});
   const queryClient = useQueryClient();
   console.log(recipeInfo);
@@ -15,12 +19,21 @@ const Modal = ({ show, setShowModal }) => {
       console.log(recipeInfo);
     },
   });
-
   const handleChange = (e) => {
     if (e.target.name === "image") {
-      setRecipeInfo({ ...recipeInfo, [e.target.name]: e.target.files[0] });
+      setRecipeInfo({
+        ...recipeInfo,
+        categories: valuesString,
+        ingredients: valuesStringIng,
+        [e.target.name]: e.target.files[0],
+      });
     } else {
-      setRecipeInfo({ ...recipeInfo, [e.target.name]: e.target.value });
+      setRecipeInfo({
+        ...recipeInfo,
+        categories: valuesString,
+        ingredients: valuesStringIng,
+        [e.target.name]: e.target.value,
+      });
     }
   };
   const handleSubmit = (e) => {
@@ -57,8 +70,22 @@ const Modal = ({ show, setShowModal }) => {
         <form onSubmit={handleSubmit} className="space-y-4">
           <Input name="name" onChange={handleChange} />
           <Input name="text" onChange={handleChange} />
-          <Input name="categories" onChange={handleChange} />
-          <Input name="ingredients" onChange={handleChange} />
+          <div className="flex justify-start">
+            <h1 className="">categories</h1>
+            <MultiSelect
+              valuesString={valuesString}
+              setValuesString={setValuesString}
+            />
+          </div>
+          <div className="flex justify-start">
+            <h1 className="">ingredients</h1>
+            <MultiSelectIngredients
+              valuesString={valuesStringIng}
+              setValuesString={setValuesStringIng}
+            />
+          </div>
+          {/* <Input name="categories" onChange={handleChange} />
+          <Input name="ingredients" onChange={handleChange} /> */}
           <Input name="image" type="file" onChange={handleChange} />
           <div className="flex justify-center">
             <button
