@@ -2,9 +2,7 @@ import instance from ".";
 import jwt_decode from "jwt-decode";
 
 const signup = async (userInfo) => {
-  const formData = new FormData();
-  for (const key in userInfo) formData.append(key, userInfo[key]);
-  const { data } = await instance.post("/users/signup", formData);
+  const { data } = await instance.post("/users/signup", userInfo);
   storeToken(data.token);
   return data;
 };

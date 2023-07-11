@@ -1,11 +1,12 @@
 import React from "react";
+import RecipeList from "../Components/Recipes/RecipeList";
 
-const Recipes = () => {
+const RecipesPage = () => {
   return (
     <div>
-      <div className=""></div>
+      <RecipeList recipes={recipes} />
     </div>
   );
 };
 
-export default Recipes;
+export default RecipesPage;

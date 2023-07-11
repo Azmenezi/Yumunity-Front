@@ -4,7 +4,7 @@ import SignUp from "../Components/Auth/SignUp";
 
 const Signup = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center absolute inset-0 z-[-1]">
+    <div className="min-h-screen flex items-center justify-center absolute inset-0">
       <SignUp />
     </div>
   );
