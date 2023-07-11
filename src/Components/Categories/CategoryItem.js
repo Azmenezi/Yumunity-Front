@@ -1,17 +1,18 @@
 import React from "react";
 
-const CategoryItem = ({ category }) => {
+const CategoryItem = ({ category, image }) => {
   return (
     <li key={category.id} className="py-2">
-      <div className="flex flex-col items-center border border-gray-300 bg-white rounded-lg h-[500px] w-[200px] xl:w-[500px] p-4 hover:scale-105 transition-transform duration-300">
-        <div className="h-64 w-full mb-4">
-          <img
-            src={category.image}
-            alt={category.name}
-            className="h-full w-full object-cover rounded-lg"
-          />
+      <div className="relative bg-no-repeat bg-center bg-cover h-[500px] w-[200px] xl:w-[500px] hover:scale-105 transition-transform duration-300 rounded-lg">
+        <div className="absolute inset-0 bg-black opacity-50 rounded-lg"></div>
+        <div className="absolute inset-0 flex flex-col items-center justify-center text-white text-4xl font-bold">
+          <span>{category.name}</span>
         </div>
-        <div className="text-center">{category.name}</div>
+        <img
+          src={image}
+          alt={category.name}
+          className="h-full w-full object-cover rounded-lg"
+        />
       </div>
     </li>
   );

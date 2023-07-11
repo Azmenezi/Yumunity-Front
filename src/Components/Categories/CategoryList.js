@@ -1,8 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-
 import { getAllCategories } from "../../Api/categories";
 import CategoryItem from "../Categories/CategoryItem";
+import beef from "../../media/categories/beef.jpg";
+import vegetables from "../../media/categories/vegetables.jpg";
+import dairy from "../../media/categories/dairy.jpg";
+import poultry from "../../media/categories/poultry.jpg";
+import fruits from "../../media/categories/fruits.jpg";
+
+const images = [beef, fruits, vegetables, dairy, poultry];
 
 const CategoryList = () => {
   const [query, setQuery] = useState("");
@@ -31,8 +37,12 @@ const CategoryList = () => {
           />
         </div>
         <ul className="flex flex-wrap justify-center gap-10">
-          {categories?.map((category) => (
-            <CategoryItem category={category} key={category._id} />
+          {filteredCategories?.map((category, index) => (
+            <CategoryItem
+              category={category}
+              image={images[index % images.length]}
+              key={category._id}
+            />
           ))}
         </ul>
       </div>
