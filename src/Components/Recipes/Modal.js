@@ -6,21 +6,26 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 const Modal = ({ show, setShowModal }) => {
   const [recipeInfo, setRecipeInfo] = useState({});
   const queryClient = useQueryClient();
+  console.log(recipeInfo);
   const { mutate: cRecipe } = useMutation({
-    mutationFn: () => createRecipe(recipeInfo),
+    mutationFn: (recipeInfo) => createRecipe(recipeInfo),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["recipes"] });
       setShowModal(false);
+      console.log(recipeInfo);
     },
   });
 
   const handleChange = (e) => {
-    setRecipeInfo({ ...recipeInfo, [e.target.name]: e.target.value });
+    if (e.target.name === "image") {
+      setRecipeInfo({ ...recipeInfo, [e.target.name]: e.target.files[0] });
+    } else {
+      setRecipeInfo({ ...recipeInfo, [e.target.name]: e.target.value });
+    }
   };
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    cRecipe();
+    cRecipe(recipeInfo);
     setShowModal(false);
   };
 
@@ -51,9 +56,10 @@ const Modal = ({ show, setShowModal }) => {
         </button>
         <form onSubmit={handleSubmit} className="space-y-4">
           <Input name="name" onChange={handleChange} />
+          <Input name="text" onChange={handleChange} />
           <Input name="categories" onChange={handleChange} />
           <Input name="ingredients" onChange={handleChange} />
-          <Input name="image" onChange={handleChange} />
+          <Input name="image" type="file" onChange={handleChange} />
           <div className="flex justify-center">
             <button
               type="submit"

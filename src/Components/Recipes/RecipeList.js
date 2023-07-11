@@ -13,7 +13,7 @@ const RecipeList = () => {
   });
 
   if (isLoading) {
-    return <h1>Loading ...</h1>;
+    return <h1 className="flex justify-center items-center">Loading ...</h1>;
   }
 
   const handleSearch = (event) => {
@@ -43,8 +43,8 @@ const RecipeList = () => {
             Add recipe
           </button>
         </div>
-        {filteredRecipes}
       </div>
+      <div className="flex flex-wrap items-center justify-center gap-6">{filteredRecipes}</div>
       <Modal show={showModal} setShowModal={setShowModal} />
     </>
   );
