@@ -1,12 +1,14 @@
 import React, { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import CreatableSelect from "react-select/creatable";
-import { getAllCategories } from "../../Api/categories";
+import { getAllCategories, createCategory } from "../../Api/categories";
+
 const createOption = (label) => ({
   label,
   value: label.toLowerCase().replace(/\W/g, ""),
 });
 const MultiSelect = () => {
+  const queryClient = useQueryClient();
   const { data: categories } = useQuery({
     queryKey: ["categories"],
     queryFn: getAllCategories,
@@ -16,35 +18,51 @@ const MultiSelect = () => {
     value: category.name.toLowerCase(),
     label: category.name,
   }));
-  console.log(categoriesName);
+
   const [isLoading, setIsLoading] = useState(false);
   const [options, setOptions] = useState(categoriesName);
   const [value, setValue] = useState(null);
+  const { mutate: createCategoryFn } = useMutation({
+    mutationFn: (v) => createCategory(v),
+    onSuccess: (newCategory) => {
+      setIsLoading(false);
+      const option = createOption(newCategory.name);
+      setOptions((prev) => [...prev, option]);
+
+      queryClient.setQueryData(["categories"], (prevData) => [
+        ...prevData,
+        newCategory,
+      ]);
+      setValue(option);
+    },
+  });
+  // const handleCreate = (inputValue) => {
+  //   console.log(inputValue);
+  //   inputValue = { name: inputValue };
+  //   console.log(inputValue);
+  //   createCategoryFn(inputValue);
+  // };
 
   const handleCreate = (inputValue) => {
+    console.log(inputValue);
     setIsLoading(true);
-    setTimeout(() => {
-      const newOption = createOption(inputValue);
-      setIsLoading(false);
-      setOptions((prev) => [...prev, newOption]);
-      console.log(options);
-      setValue(newOption);
-    }, 1000);
-    ç;
+    console.log(inputValue);
+    inputValue = { name: inputValue };
+    createCategoryFn(inputValue);
+    console.log(options);
   };
-
   //https://react-select.com/creatable
   return (
     <div className="px-4 py-6">
       <CreatableSelect
-        //defaultValue={categoriesName}
+        // defaultValue={categoriesName}
         isMulti
         isClearable
         isDisabled={isLoading}
         isLoading={isLoading}
         onChange={(newValue) => setValue(newValue)}
-        onCreateOption={handleCreate}
         //onCreateOption={handleCreate}
+        onCreateOption={handleCreate}
         options={options}
         value={value}
       />

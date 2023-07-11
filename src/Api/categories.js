@@ -1,7 +1,8 @@
 import instance from ".";
 
 const createCategory = async (category) => {
-  const { data } = await instance.post("/categories", { category });
+  console.log(category);
+  const { data } = await instance.post("/categories", category);
   return data;
 };
 
