@@ -1,27 +1,28 @@
 import React, { useState } from "react";
+import RecipeItem from "./RecipeItem";
 import { useQuery } from "@tanstack/react-query";
 import { getRecipies } from "../../Api/recipes";
 import Modal from "./Modal";
 
-const RecipeList = ({ recipes }) => {
+const RecipeList = () => {
   const [query, setQuery] = useState("");
   const [showModal, setShowModal] = useState(false);
-  // const { data: recipes, isLoading } = useQuery({
-  //   queryKey: ["recipes"],
-  //   queryFn: () => getRecipies(),
-  // });
+  const { data: recipes, isLoading } = useQuery({
+    queryKey: ["recipes"],
+    queryFn: () => getRecipies(),
+  });
 
-  // if (isLoading) {
-  //   return <h1>Loading ...</h1>;
-  // }
+  if (isLoading) {
+    return <h1>Loading ...</h1>;
+  }
 
   const handleSearch = (event) => {
     setQuery(event.target.value);
   };
 
-  const filteredRecipes = recipes.filter((recipe) =>
-    recipe.name.toLowerCase().includes(query.toLowerCase())
-  );
+  const filteredRecipes = recipes
+    .filter((recipe) => recipe.name.toLowerCase().includes(query.toLowerCase()))
+    .map((recipe) => <RecipeItem recipe={recipe} key={recipe.id} />);
 
   return (
     <>
@@ -42,22 +43,7 @@ const RecipeList = ({ recipes }) => {
             Add recipe
           </button>
         </div>
-        <ul className="flex flex-wrap justify-center gap-10">
-          {filteredRecipes.map((recipe) => (
-            <li key={recipe.id} className="py-2">
-              <div className="flex flex-col items-center border border-gray-300 bg-white rounded-lg h-[500px] w-[200px] xl:w-[500px] p-4 hover:scale-105 transition-transform duration-300">
-                <div className="h-64 w-full mb-4">
-                  <img
-                    src={recipe.image}
-                    alt={recipe.name}
-                    className="h-full w-full object-cover rounded-lg"
-                  />
-                </div>
-                <div className="text-center">{recipe.name}</div>
-              </div>
-            </li>
-          ))}
-        </ul>
+        {filteredRecipes}
       </div>
       <Modal show={showModal} setShowModal={setShowModal} />
     </>

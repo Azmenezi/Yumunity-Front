@@ -4,7 +4,7 @@ import RecipeList from "../Components/Recipes/RecipeList";
 const RecipesPage = () => {
   return (
     <div>
-      <RecipeList recipes={recipes} />
+      <RecipeList />
     </div>
   );
 };
