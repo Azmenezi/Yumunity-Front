@@ -37,7 +37,7 @@ const RecipeList = ({ recipes }) => {
           <button
             type="button"
             onClick={() => setShowModal(true)}
-            className=" ml-5 w-full h-8 p-4 rounded-md border border-black bg-green-400 hover:bg-green-600"
+            className="flex items-center ml-5 w-full h-8 p-5 rounded-md border border-black bg-green-400 hover:bg-green-600"
           >
             Add recipe
           </button>

@@ -10,7 +10,8 @@
 
 body {
   background-color: #f0eccf;
-  margin-top: 7%;
+  margin-top: 2%;
+  min-height: 900px;
 }
 .active {
   color: #ffd98f;
