@@ -8,9 +8,9 @@ const createRecipe = async (recipeInfo) => {
   return data;
 };
 
-const getRecipies = async () => {
+const getRecipes = async () => {
   const { data } = await instance.get("/recipes");
   return data;
 };
 
-export { createRecipe, getRecipies };
+export { createRecipe, getRecipes };

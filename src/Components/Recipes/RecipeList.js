@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import RecipeItem from "./RecipeItem";
 import { useQuery } from "@tanstack/react-query";
-import { getRecipies } from "../../Api/recipes";
+import { getRecipes } from "../../Api/recipes";
 import Modal from "./Modal";
 
 const RecipeList = () => {
@@ -9,7 +9,7 @@ const RecipeList = () => {
   const [showModal, setShowModal] = useState(false);
   const { data: recipes, isLoading } = useQuery({
     queryKey: ["recipes"],
-    queryFn: () => getRecipies(),
+    queryFn: () => getRecipes(),
   });
 
   if (isLoading) {
