@@ -16,8 +16,9 @@ const MultiSelect = () => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [options, setOptions] = useState([]);
-  //selected values
   const [value, setValue] = useState([]);
+  //selected values
+  const [valuesString, setValuesString] = useState([]);
   useEffect(() => {
     if (categories) {
       const categoriesName = categories.map((category) => ({
@@ -30,7 +31,7 @@ const MultiSelect = () => {
   }, [categories]);
 
   const { mutate: createCategoryFn } = useMutation({
-    mutationFn: (v) => createCategory(v),
+    mutationFn: (category) => createCategory(category),
     onSuccess: (newCategory) => {
       setIsLoading(false);
       const option = createOption(newCategory.name);
@@ -45,13 +46,16 @@ const MultiSelect = () => {
   });
 
   const handleCreate = (inputValue) => {
-    console.log(inputValue);
     setIsLoading(true);
-    console.log(inputValue);
-    //inputValue = { name: inputValue };
     createCategoryFn({ name: inputValue });
-    console.log(options);
   };
+  const handleSelectChange = (newValue) => {
+    const names = newValue.map((v) => v.value);
+    setValue(newValue);
+    setValuesString(names);
+    console.log(names);
+  };
+
   //https://react-select.com/creatable
   return (
     <div className="px-4 py-6">
@@ -60,7 +64,7 @@ const MultiSelect = () => {
         isClearable
         isDisabled={isLoading}
         isLoading={isLoading}
-        onChange={(newValue) => setValue(newValue)}
+        onChange={handleSelectChange}
         onCreateOption={handleCreate}
         options={options}
         value={value}
