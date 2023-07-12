@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { getRecipeById } from "../../Api/recipes";
 import { useNavigate, useParams } from "react-router";
 import { useQuery } from "@tanstack/react-query";
@@ -6,15 +6,20 @@ import arrowImg from "../../media/arrow.png";
 const RecipeDetails = () => {
   const navigate = useNavigate();
   const { recipeId } = useParams();
+  const [query, setQuery] = useState("");
   const {
     data: recipe,
     isLoading,
     isError,
     error,
   } = useQuery({
-    queryKey: ["recipe"],
+    queryKey: ["recipe", recipeId],
     queryFn: () => getRecipeById(recipeId),
   });
+
+  useEffect(() => {
+    setQuery("");
+  }, [recipeId]);
   if (isLoading) {
     return <div>Loading...</div>;
   }

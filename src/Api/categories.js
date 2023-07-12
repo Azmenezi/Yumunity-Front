@@ -10,5 +10,8 @@ const getAllCategories = async () => {
   const { data } = await instance.get("/categories");
   return data;
 };
-
-export { createCategory, getAllCategories };
+const recipesByCategory = async (id) => {
+  const { data } = await instance.get(`/categories/${id}`);
+  return data;
+};
+export { createCategory, getAllCategories, recipesByCategory };
