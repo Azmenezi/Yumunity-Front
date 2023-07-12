@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { getRecipes } from "../Api/recipes";
+import { getRecipies } from "../Api/recipes";
 import RecipeItem from "../Components/Recipes/RecipeItem";
 
 const Home = () => {
@@ -8,7 +8,7 @@ const Home = () => {
 
   const { data: recipes, isLoading } = useQuery({
     queryKey: ["recipes"],
-    queryFn: () => getRecipes(),
+    queryFn: () => getRecipies(),
   });
 
   const getRandomRecipes = (recipes, count) => {
@@ -38,7 +38,7 @@ const Home = () => {
           <div className="flex items-center justify-left">
             <h1 className="text-4xl my-5 text-[#A3BB98]">Featured recipes</h1>
           </div>
-          
+
           <div className="flex flex-row gap-28 h-[40vh] justify-center">
             {featuredRecipes.map((recipe) => (
               <RecipeItem recipe={recipe} key={recipe.id} />
