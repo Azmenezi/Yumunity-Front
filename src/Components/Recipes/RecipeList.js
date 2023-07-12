@@ -22,7 +22,7 @@ const RecipeList = () => {
 
   const filteredRecipes = recipes
     .filter((recipe) => recipe.name.toLowerCase().includes(query.toLowerCase()))
-    .map((recipe) => <RecipeItem recipe={recipe} key={recipe.id} />);
+    .map((recipe) =><> <RecipeItem recipe={recipe} key={recipe.id} /> </>);
 
   return (
     <>

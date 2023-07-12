@@ -11,12 +11,15 @@ const RecipeItem = ({ recipe }) => {
       <ul className="flex flex-wrap justify-center gap-10">
         <li key={recipe.id} className="py-2">
           <div className="relative border border-gray-300 bg-white rounded-lg h-[500px] w-[200px] xl:w-[500px] p-4 hover:scale-105 transition-transform duration-300">
+            
             <div className="absolute inset-0">
               <img
                 src={`http://localhost:8000/${recipe.image}`}
                 alt={recipe.name}
                 className="h-full w-full object-cover rounded-lg"
               />
+                            <div className="absolute inset-0 bg-[#00000049] rounded"></div>
+
               <div className="absolute inset-0 flex flex-col items-center justify-center text-white text-4xl font-bold">
                 <span>{recipe.name}</span>
               </div>
