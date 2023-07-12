@@ -14,7 +14,7 @@ const RecipeList = () => {
     queryKey: ["recipes"],
     queryFn: () => getRecipies(),
   });
-
+  // recipes?.sort((a, b) => a - b);
   if (isLoading) {
     return <h1 className="flex justify-center items-center">Loading ...</h1>;
   }
@@ -25,7 +25,12 @@ const RecipeList = () => {
 
   const filteredRecipes = recipes
     .filter((recipe) => recipe.name.toLowerCase().includes(query.toLowerCase()))
-    .map((recipe) =><> <RecipeItem recipe={recipe} key={recipe.id} /> </>);
+    .map((recipe) => (
+      <>
+        {" "}
+        <RecipeItem recipe={recipe} key={recipe.id} />{" "}
+      </>
+    ));
 
   return (
     <>

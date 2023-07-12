@@ -10,7 +10,6 @@ const Modal = ({ show, setShowModal }) => {
   const [valuesStringIng, setValuesStringIng] = useState([]);
   const [recipeInfo, setRecipeInfo] = useState({});
   const queryClient = useQueryClient();
-  console.log(recipeInfo);
   const { mutate: cRecipe } = useMutation({
     mutationFn: (recipeInfo) => createRecipe(recipeInfo),
     onSuccess: () => {

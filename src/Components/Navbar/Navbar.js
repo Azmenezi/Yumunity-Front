@@ -85,13 +85,6 @@ function Navbar() {
           >
             Categories
           </NavLink>
-          <NavLink
-            to="/ingredients"
-            onClick={() => setIsOpen(!isOpen)}
-            className="text-2xl text-white uppercase tracking-wide"
-          >
-            Ingredients
-          </NavLink>
         </ul>
         <div className="absolute top-[80vh] left-[6vw] flex gap-5">
           {!user ? (
