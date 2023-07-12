@@ -16,3 +16,11 @@ body {
 .active {
   color: #ffd98f;
 }
+
+.centered-text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: rgba(255,255,255,0.8); /* white color with 80% opacity */
+}

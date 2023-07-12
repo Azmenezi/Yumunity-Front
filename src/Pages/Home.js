@@ -35,7 +35,7 @@ const Home = () => {
       </div>
       <div className="">
         <div className="flex flex-col mx-10 h-full">
-          <div className="flex items-center justify-left">
+          <div className="flex items-center justify-center">
             <h1 className="text-4xl my-5 text-[#A3BB98]">Featured recipes</h1>
           </div>
           <div className=" flex justify-center mx-10">

@@ -38,4 +38,21 @@ const checkToken = () => {
 const signout = () => {
   localStorage.removeItem("token");
 };
-export { signin, signup, storeToken, checkToken, signout };
+
+const profile = () => {
+  const token = localStorage.getItem("token");
+  if (token) {
+    try {
+      const decoded = jwt_decode(token);
+
+      return decoded;
+    } catch (error) {
+      console.log("Invalid token:", error);
+      localStorage.removeItem("token");
+      return false;
+    }
+  }
+  return false;
+};
+
+export { signin, signup, storeToken, checkToken, signout, profile };
