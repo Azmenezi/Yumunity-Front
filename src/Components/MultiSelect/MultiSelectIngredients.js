@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import CreatableSelect from "react-select/creatable";
-import { getAllCategories, createCategory } from "../../Api/categories";
+import { getAllIngredients, createIngredient } from "../../Api/ingredients";
 
 const createOption = (label) => ({
   label,
   value: label.toLowerCase().replace(/\W/g, ""),
 });
-const MultiSelect = ({ valuesString, setValuesString }) => {
+const MultiSelectIngredients = ({ valuesString, setValuesString }) => {
   const queryClient = useQueryClient();
-  const { data: categories } = useQuery({
-    queryKey: ["categories"],
-    queryFn: getAllCategories,
+  const { data: ingredients } = useQuery({
+    queryKey: ["ingredients"],
+    queryFn: getAllIngredients,
   });
 
   const [isLoading, setIsLoading] = useState(false);
@@ -20,24 +20,24 @@ const MultiSelect = ({ valuesString, setValuesString }) => {
   //selected values
 
   useEffect(() => {
-    if (categories) {
-      const categoriesName = categories.map((category) => ({
+    if (ingredients) {
+      const ingredientsName = ingredients.map((category) => ({
         value: category.name.toLowerCase(),
         label: category.name,
       }));
 
-      setOptions(categoriesName);
+      setOptions(ingredientsName);
     }
-  }, [categories]);
+  }, [ingredients]);
 
-  const { mutate: createCategoryFn } = useMutation({
-    mutationFn: (category) => createCategory(category),
+  const { mutate: createIngredientFn } = useMutation({
+    mutationFn: (category) => createIngredient(category),
     onSuccess: (newCategory) => {
       setIsLoading(false);
       const option = createOption(newCategory.name);
       setOptions((prev) => [...prev, option]);
 
-      queryClient.setQueryData(["categories"], (prevData) => [
+      queryClient.setQueryData(["ingredients"], (prevData) => [
         ...prevData,
         newCategory,
       ]);
@@ -48,7 +48,7 @@ const MultiSelect = ({ valuesString, setValuesString }) => {
 
   const handleCreate = (inputValue) => {
     setIsLoading(true);
-    createCategoryFn({ name: inputValue });
+    createIngredientFn({ name: inputValue });
   };
   const handleSelectChange = (newValue) => {
     const names = newValue.map((v) => v.value);
@@ -75,4 +75,4 @@ const MultiSelect = ({ valuesString, setValuesString }) => {
   );
 };
 
-export default MultiSelect;
+export default MultiSelectIngredients;
