@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import RecipeItem from "./RecipeItem";
 import { useQuery } from "@tanstack/react-query";
-import { getRecipes } from "../../Api/recipes";
+import { getRecipies } from "../../Api/recipes";
 import Modal from "./Modal";
 
 const RecipeList = () => {
@@ -9,7 +9,7 @@ const RecipeList = () => {
   const [showModal, setShowModal] = useState(false);
   const { data: recipes, isLoading } = useQuery({
     queryKey: ["recipes"],
-    queryFn: () => getRecipes(),
+    queryFn: () => getRecipies(),
   });
 
   if (isLoading) {
@@ -44,7 +44,9 @@ const RecipeList = () => {
           </button>
         </div>
       </div>
-      <div className="flex flex-wrap items-center justify-center gap-6">{filteredRecipes}</div>
+      <div className="flex flex-wrap items-center justify-center gap-6">
+        {filteredRecipes}
+      </div>
       <Modal show={showModal} setShowModal={setShowModal} />
     </>
   );
