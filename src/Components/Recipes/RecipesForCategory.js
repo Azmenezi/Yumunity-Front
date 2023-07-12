@@ -1,20 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import RecipeItem from "./RecipeItem";
 import { useQuery } from "@tanstack/react-query";
-import { useContext } from "react";
-import UserContext from "../../context/UserContext";
-import { getRecipies } from "../../Api/recipes";
-import Modal from "./Modal";
+import { recipesByCategory } from "../../Api/categories";
+import { useNavigate, useParams } from "react-router";
 
-const RecipeList = () => {
-  const [user, setUser] = useContext(UserContext);
+const RecipesForCategory = () => {
+  const { categoryId } = useParams();
   const [query, setQuery] = useState("");
-  const [showModal, setShowModal] = useState(false);
   const { data: recipes, isLoading } = useQuery({
-    queryKey: ["recipes"],
-    queryFn: () => getRecipies(),
+    queryKey: ["recipesByCategory", categoryId],
+    queryFn: () => recipesByCategory(categoryId),
   });
-
+  useEffect(() => {
+    setQuery("");
+  }, [categoryId]);
   if (isLoading) {
     return <h1 className="flex justify-center items-center">Loading ...</h1>;
   }
@@ -25,7 +24,7 @@ const RecipeList = () => {
 
   const filteredRecipes = recipes
     .filter((recipe) => recipe.name.toLowerCase().includes(query.toLowerCase()))
-    .map((recipe) =><> <RecipeItem recipe={recipe} key={recipe.id} /> </>);
+    .map((recipe) => <RecipeItem recipe={recipe} key={recipe.id} />);
 
   return (
     <>
@@ -38,25 +37,13 @@ const RecipeList = () => {
             onChange={handleSearch}
             className="p-2 mb-12 border border-gray-300 rounded-md"
           />
-          {user ? (
-            <button
-              type="button"
-              onClick={() => setShowModal(true)}
-              className="flex items-center ml-5 w-full h-8 p-5 rounded-md border border-black bg-green-400 hover:bg-green-600"
-            >
-              Add recipe
-            </button>
-          ) : (
-            <></>
-          )}
         </div>
       </div>
       <div className="flex flex-wrap items-center justify-center gap-6">
         {filteredRecipes}
       </div>
-      <Modal show={showModal} setShowModal={setShowModal} />
     </>
   );
 };
 
-export default RecipeList;
+export default RecipesForCategory;

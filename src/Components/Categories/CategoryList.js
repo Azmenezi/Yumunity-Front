@@ -30,7 +30,7 @@ const CategoryList = () => {
         <div className="flex flex-row">
           <input
             type="text"
-            placeholder="Search recipes"
+            placeholder="Search categories"
             value={query}
             onChange={handleSearch}
             className="p-2 mb-12 border border-gray-300 rounded-md"

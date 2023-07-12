@@ -10,6 +10,7 @@ import Recipes from "./Pages/Recipes";
 import Categories from "./Pages/Categories";
 import Ingredients from "./Pages/Ingredients";
 import RecipeDetails from "./Components/Recipes/RecipeDetails";
+import RecipesForCategory from "./Components/Recipes/RecipesForCategory";
 function App() {
   const [user, setUser] = useState(false);
   useEffect(() => {
@@ -25,6 +26,10 @@ function App() {
           <Route path="/recipes" element={<Recipes />} />
           <Route path="/recipes/:recipeId" element={<RecipeDetails />} />
           <Route path="/categories" element={<Categories />} />
+          <Route
+            path="/categories/:categoryId"
+            element={<RecipesForCategory />}
+          />
           <Route path="/ingredients" element={<Ingredients />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/signin" element={<Signin />} />

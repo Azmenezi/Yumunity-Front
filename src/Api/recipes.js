@@ -27,6 +27,4 @@ const getRecipeById = async (id) => {
   return data;
 };
 
-
 export { createRecipe, getRecipies, getRecipeById };
-
