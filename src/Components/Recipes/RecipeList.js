@@ -44,7 +44,9 @@ const RecipeList = () => {
           </button>
         </div>
       </div>
-      <div className="flex flex-wrap items-center justify-center gap-6">{filteredRecipes}</div>
+      <div className="flex flex-wrap items-center justify-center gap-6">
+        {filteredRecipes}
+      </div>
       <Modal show={showModal} setShowModal={setShowModal} />
     </>
   );
