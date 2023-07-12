@@ -29,9 +29,10 @@ const RecipeDetails = () => {
         <div className="">
           <img
             src={arrowImg}
-            className="absolute m-3 w-12 bg-[#a3bb9891] rounded-full p-2 hover:scale-110 duration-200"
+            className="absolute m-3 w-12 bg-[#a3bb9891] rounded-full p-2 hover:scale-110 duration-200 z-20"
             onClick={() => navigate("/recipes")}
           />
+            <div className=" absolute bg-[#00000068] z-10 w-[80%] h-[300px] flex justify-center items-center text-5xl text-white font-bold">{recipe?.name}</div>
           <img
             src={`http://localhost:8000/${recipe?.image}`}
             className="w-full h-[300px] overflow-hidden object-cover bg-white"

@@ -38,11 +38,14 @@ const Home = () => {
           <div className="flex items-center justify-left">
             <h1 className="text-4xl my-5 text-[#A3BB98]">Featured recipes</h1>
           </div>
-
-          <div className="flex flex-row gap-28 h-[40vh] justify-center">
-            {featuredRecipes.map((recipe) => (
-              <RecipeItem recipe={recipe} key={recipe.id} />
-            ))}
+          <div className=" flex justify-center mx-10">
+            <div className="mx-5 w-[80%]">
+              <div className="flex flex-row gap-[2%] m-5 h-[40vh] justify-center">
+                {featuredRecipes.map((recipe) => (
+                  <RecipeItem recipe={recipe} key={recipe.id} />
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </div>
